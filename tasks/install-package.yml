@@ -1,0 +1,5 @@
+---
+
+- name: install statsd package
+  package:
+    name: statsd

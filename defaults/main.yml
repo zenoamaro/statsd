@@ -5,6 +5,8 @@
 # Process
 # -------
 
+statsd_install_from_source: true
+
 statsd_service_name: statsd
 statsd_init_script: /etc/init.d/statsd
 
