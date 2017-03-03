@@ -11,7 +11,7 @@
 - meta: flush_handlers
 
 - name: Ensure StatsD is running
-  sudo: yes
+  become: yes
   service:
     name: "{{statsd_service_name}}"
     state: running
