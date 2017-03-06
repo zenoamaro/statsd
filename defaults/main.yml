@@ -8,6 +8,8 @@
 statsd_install_from_source: true
 
 statsd_service_name: statsd
+statsd_service_manage: yes
+
 statsd_init_script: /etc/init.d/statsd
 
 statsd_user: statsd
