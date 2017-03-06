@@ -191,7 +191,7 @@ automaticConfigReload: {{'true' if statsd_automatic_config_reload else 'false'}}
 {% for key, value in statsd_extra_conf.items() %}
 "{{key}}": {
 {% for key, value in value.items() %}
-	"{{key}}": {{value}},
+	"{{key}}": {{value|to_json}},
 {% endfor %}
 }
 {% endfor %}
