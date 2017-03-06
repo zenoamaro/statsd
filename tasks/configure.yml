@@ -1,31 +1,10 @@
 ---
 
-- name: Create user and group for StatsD
-  sudo: yes
-  user:
-    createhome: no
-    name: "{{statsd_user}}"
-  tags:
-    - conf
-    - statsd
-    - monitoring
-
-- name: Create StatsD directories
-  sudo: yes
-  file:
-    dest: "{{item}}"
-    state: directory
-  with_items:
-    - "{{statsd_conf_dir}}"
-    - "{{statsd_run_dir}}"
-    - "{{statsd_log_dir}}"
-  tags:
-    - conf
-    - statsd
-    - monitoring
+- include: configure-source.yml
+  when: statsd_install_from_source
 
 - name: Configure StatsD
-  sudo: yes
+  become: yes
   template:
     src: config.js
     dest: "{{statsd_conf_file}}"
@@ -35,27 +14,8 @@
     - statsd
     - monitoring
 
-- name: Create StatsD init script
-  sudo: yes
-  template:
-    src: "{{item}}"
-    dest: "{{statsd_init_script}}"
-    mode: 0755
-  with_first_found:
-    - files:
-        - "init.{{ansible_distribution}}-{{ansible_distribution_release}}"
-        - "init.{{ansible_distribution}}"
-        - "init.{{ansible_os_family}}"
-      paths:
-        - ../templates/
-  tags:
-    - init
-    - conf
-    - statsd
-    - monitoring
-
 - name: Add StatsD to init
-  sudo: yes
+  become: yes
   service:
     name: "{{statsd_service_name}}"
     enabled: yes

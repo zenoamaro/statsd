@@ -24,7 +24,7 @@
 
 - name: Install StatsD
   when: statsd_release|changed
-  sudo: yes
+  become: yes
   command: "rsync -av --delete '/tmp/{{statsd_package}}/' '{{statsd_install_dir}}'"
   tags:
     - deps
@@ -32,7 +32,7 @@
     - monitoring
 
 - name: "Update NPM dependencies"
-  sudo: yes
+  become: yes
   npm:
     path: "{{statsd_install_dir}}"
     state: latest
@@ -43,7 +43,7 @@
     - monitoring
 
 - name: "Install extra packages"
-  sudo: yes
+  become: yes
   npm:
     name: "{{item}}"
     path: "{{statsd_install_dir}}"

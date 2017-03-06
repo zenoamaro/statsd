@@ -3,7 +3,12 @@
 # Delegate further configuration to subtasks
 # placed in this same directory.
 
-- include: install.yml
+- include: install-source.yml
+  when: statsd_install_from_source
+
+- include: install-package.yml
+  when: not statsd_install_from_source
+
 - include: configure.yml
 
 # Flush handlers now, so we avoid starting the process and then
@@ -11,10 +16,11 @@
 - meta: flush_handlers
 
 - name: Ensure StatsD is running
-  sudo: yes
+  become: yes
   service:
     name: "{{statsd_service_name}}"
     state: running
+  when: statsd_service_manage
   tags:
     - init
     - statsd

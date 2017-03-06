@@ -1,9 +1,10 @@
 ---
 
 - name: reload statsd
-  sudo: yes
+  become: yes
   service: name=statsd state=reloaded
 
 - name: restart statsd
-  sudo: yes
+  become: yes
   service: name=statsd state=restarted
+  when: statsd_service_manage

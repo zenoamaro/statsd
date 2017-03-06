@@ -14,12 +14,12 @@
   pre_tasks:
 
     - name: APT update
-      sudo: yes
+      become: yes
       when: ansible_os_family == 'Debian'
       apt: update_cache=yes cache_valid_time=3600
 
     - name: Install Node.js
-      sudo: yes
+      become: yes
       when: ansible_os_family == 'Debian'
       apt: "name={{item}} state=installed"
       with_items:
